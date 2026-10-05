@@ -10,6 +10,8 @@ function Login() {
 
   //executa quando o usuário clica no botão "Entrar"
   const handleLogin = () => {
+    e.preventDefault()
+
     if(!email || !senha){
     setErro("Preencha e-mail e senha.")
       return
@@ -32,60 +34,114 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md">
-        
-        <h1 className="text-3xl font-bold text-center mb-2">
-          QUIZ EDUCATIVO
+    <div className="min-h-screen bg-[#08070f] text-white flex flex-col items-center justify-center px-4">
+
+      {/* Logo */}
+      <div className="flex flex-col items-center mb-12">
+
+        <div className="w-[72px] h-[72px] rounded-[18px] bg-gradient-to-br from-[#7c3aed] to-[#a855f7] flex items-center justify-center shadow-[0_0_35px_rgba(139,92,246,0.45)]">
+          <span className="text-white text-2xl font-bold">
+            icon
+          </span>
+        </div>
+
+        <h1 className="mt-5 text-[32px] font-bold tracking-tight">
+          QuizMaster
         </h1>
 
-        <p className="text-center text-gray-500 mb-8">
-          Entre para continuar
+        <p className="mt-1 text-[#7d72a8] text-base font-mono">
+          plataforma educacional integradora
         </p>
 
-        <div className="mb-5">
-          <label className="block text-sm font-medium mb-2"> 
-            E-mail
-          </label>
+      </div>
 
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}  // Atualiza o estado sempre que o usuário digita
-            placeholder="Digite seu e-mail"
-            className="w-full border border-gray-300 rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+      {/* Card de Login */}
+      <div className="w-full max-w-[504px] rounded-[18px] border border-[#26243a] bg-[#10101a] px-9 py-10">
 
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">
-            Senha
-          </label>
+        <h2 className="text-[22px] font-bold mb-8">
+          Entrar na conta
+        </h2>
 
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}  // Atualiza o estado sempre que o usuário digita
-            placeholder="Digite sua senha"
-            className="w-full border border-gray-300 rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <form onSubmit={handleLogin}>
 
-        {erro && (
-          <p className="text-red-500 text-sm mb-4"> 
-            {erro} 
-          </p>
-        )}
+          {/* E-mail */}
+          <div className="mb-5">
 
-        <button
-          onClick={handleLogin} // Chama a função de login ao clicar
-          className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-        >
-          Entrar
-        </button>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-[#8176ad] mb-2"
+            >
+              EMAIL
+            </label>
+
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                setErro("")
+              }}
+              placeholder="seu@email.com"
+              className="w-full h-[52px] rounded-lg border border-[#24233a] bg-[#171629] px-4 text-white placeholder:text-[#77728f] outline-none transition focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6]"
+            />
+
+          </div>
+
+          {/* Senha */}
+          <div className="mb-5">
+
+            <label
+              htmlFor="senha"
+              className="block text-sm font-medium text-[#8176ad] mb-2"
+            >
+              SENHA
+            </label>
+
+            <input
+              id="senha"
+              type="password"
+              value={senha}
+              onChange={(e) => {
+                setSenha(e.target.value)
+                setErro("")
+              }}
+              placeholder="••••••••"
+              className="w-full h-[52px] rounded-lg border border-[#24233a] bg-[#171629] px-4 text-white placeholder:text-[#77728f] outline-none transition focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6]"
+            />
+
+          </div>
+
+          {/* Mensagem de erro */}
+          {erro && (
+            <p className="text-red-400 text-sm mb-4">
+              {erro}
+            </p>
+          )}
+
+          {/* Botão */}
+          <button
+            type="submit"
+            className="w-full h-[50px] rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#a855f7] text-white font-bold shadow-[0_0_25px_rgba(139,92,246,0.3)] transition hover:brightness-110 active:scale-[0.99]"
+          >
+            Entrar
+          </button>
+
+        </form>
+
+        {/* Cadastro */}
+        <p className="text-center text-[#8881a5] text-sm mt-8">
+          Não tem conta?{" "}
+          <button
+            type="button"
+            className="text-[#a855f7] font-semibold hover:text-[#c084fc] transition"
+          >
+            Cadastrar-se
+          </button>
+        </p>
 
       </div>
+
     </div>
   )
 }
