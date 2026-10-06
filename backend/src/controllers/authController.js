@@ -4,7 +4,7 @@ import { pool } from "../config/db.js";
 
 export async function cadastrar(req, res) {
     try {
-        const { usuario, senha } = req.body;
+        const { nome, usuario, senha, email } = req.body;
 
         if (!usuario || !senha) {
             return res.status(400).json({ mensagem: "Usuário e senha são obrigatório"});
@@ -14,7 +14,15 @@ export async function cadastrar(req, res) {
             return res.status(400).json({ mensagem: "A senha deve ter pelo menos quatro caracteres"});
         }
 
-        const [existentes] = await pool.query(
+        if ( nome || !usuario ) { 
+            return res.status(400).json({ mensagem: "Usuário nome completo "});
+        }
+
+        if ( email || !nome ) { 
+            return res.status(400).json({ mensagem: "Cadastrar seu email "});
+        }
+                
+            const [existentes] = await pool.query(
             "SELECT id FROM usuarios WHERE usuario = ? LIMIT 1",
             [usuario]
         );
@@ -43,7 +51,7 @@ export async function cadastrar(req, res) {
 
 export async function login(req, res) {
     try {
-        const { usuario, senha } = req.body;
+        const { nome, suario, senha, email } = req.body;
 
         if (!usuario || !senha) {
             return res.status(400).json({ mensagem: "Usuário e senha são obrigatórios" });
@@ -53,6 +61,10 @@ export async function login(req, res) {
             "SELECT id, usuario, senha FROM usuarios WHERE usuario = ? LIMIT 1",
             [usuario]
         );
+        
+        if (!nome || !email){
+            return res.status(400).json({ mensagem : "Nome e Email são obrigatórios" });
+        }
 
         if (usuarios.length === 0) {
             return res.status(401).json({ mensagem: "Usuário ou senha inválidos."});
